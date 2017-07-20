@@ -5,7 +5,6 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import rx.Observable
-import rx.functions.Func0
 import java.util.concurrent.TimeUnit
 
 /**
@@ -16,17 +15,16 @@ class NetworkFactory {
     private val retrofit: Retrofit
     private val service: APIClient
 
-    constructor(){
+    constructor() {
         retrofit = getObservableClient()
         service = retrofit.create<APIClient>(APIClient::class.java)
     }
+
     //New York Times api key
     val API_KEY = "524f482851314080a2fb06854de12e6e"
     val URL = "https://api.nytimes.com/svc/search/v2/"
     fun request(): Observable<Doc> {
-       return Observable.defer(Func0 {
-            return@Func0 service.request(API_KEY)
-        })
+        return service.request(API_KEY)
     }
 
 
